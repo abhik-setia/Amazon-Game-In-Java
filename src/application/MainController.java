@@ -39,6 +39,7 @@ public class MainController {
 		count1.setText(" " +bot1);
 		  count2.setText(" " +bot2);
 		cur=null;
+		
 		for(int i=0;i<12;i++)
 		{
 			for(int j=0;j<12;j++)
@@ -47,7 +48,13 @@ public class MainController {
 				botarray[i][j]=0;
 			}
 		}
-		
+		for(int i=0;i<12;i++)                             // for boundary cells
+		{
+			marked[i][0]= -1;
+			marked[0][i]= -1;
+			marked[i][11]= -1;
+			marked[11][i]= -1;
+		}
 		botarray[1][4]=2;
 		botarray[1][7]=2;
 		botarray[4][1]=2;
@@ -140,7 +147,7 @@ public class MainController {
 					 {
 					 //bot1 turn
 						 update();
-						if(bot1!=0) //checkfor gameover
+						if(bot1!=0) //check for gameover
 						{ 
 							if(!flagist)
 							 {
@@ -162,8 +169,10 @@ public class MainController {
 								}
 							}
 					 }
-						else
-							{La.setText("You have fucked yourself");}}
+					else
+						{
+						La.setText("Player 1 has lost");}
+						}
 						else if (turn%2!=0 && botarray[row][column]==3)
 					 {
 					 //bot2 turn
@@ -178,8 +187,7 @@ public class MainController {
 									 cur=img;
 									 
 								 }
-								else
-									{La.setText("You have fucked yourself");}}
+								
 						 else
 							{
 								if(flag_arrow)
@@ -192,6 +200,8 @@ public class MainController {
 								}
 							}
 						 }
+						 else
+							{La.setText("Player 2 has lost");}}
 					 else{
 						 if(!flagist)
 						 calldialogbox("Choose a proper bot");
@@ -213,8 +223,8 @@ public class MainController {
 						 flag_arrow=true;
 						 destbot=btn;
 						 srcbot.setGraphic(null);
-						 int r=GridPane.getRowIndex(btn);
-						 int c=GridPane.getColumnIndex(btn);
+						 int r=GridPane.getRowIndex(srcbot);
+						 int c=GridPane.getColumnIndex(srcbot);
 						 botarray[r][c]=0;
 						 if(turn%2==0)
 						 {
@@ -247,6 +257,7 @@ public class MainController {
 							 turn++;
 							 btn.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("arrow.png"))));
 							 botarray[row][column]=-1;
+							 marked[row][column]=-1;              // this has been updated
 							 update();
 						 }
 						 else{
@@ -550,6 +561,7 @@ public class MainController {
 				   if(!checkalldirection(buttonsInMatrix[i][j])&& marked[i][j]!=1)
 				   {
 					  bot1--;
+					  marked[i][j]=1;
 				   }
 			   }
 			   if(botarray[i][j]==3)
@@ -562,6 +574,7 @@ public class MainController {
 				   if(!checkalldirection(buttonsInMatrix[i][j])&& marked[i][j]!=1)
 				   {
 					  bot2--;
+					  marked[i][j]=1;                             //updating the values for next change
 				   }
 			   }
 			   
@@ -575,11 +588,13 @@ public class MainController {
 	{
 		int p2=GridPane.getColumnIndex(b1).intValue();
 		int p1=GridPane.getRowIndex(b1).intValue();
-		if((getButton(p1+1,p2+1).getGraphic()!=null||getButton(p1+1,p2+1).getStyleClass().equals("Cl1"))&&(getButton(p1+1,p2).getGraphic()!=null||getButton(p1+1,p2).getStyleClass().equals("Id1"))&&(getButton(p1-1,p2).getGraphic()!=null||getButton(p1-1,p2).getStyleClass().equals("Id1"))&&(getButton(p1,p2+1).getGraphic()!=null||getButton(p1,p2+1).getStyleClass().equals("Cl1"))&&(getButton(p1-1,p2-1).getGraphic()!=null||getButton(p1-1,p2-1).getStyleClass().equals("Id1"))&&(getButton(p1,p2-1).getGraphic()!=null||getButton(p1,p2-1).getStyleClass().equals("Id1"))&&(getButton(p1-1,p2+1).getGraphic()!=null||getButton(p1-1,p2+1).getStyleClass().equals("Cl1"))&&(getButton(p1+1,p2-1).getGraphic()!=null||getButton(p1+1,p2-1).getStyleClass().equals("Cl1")))
+		if((getButton(p1+1,p2+1).getGraphic()!=null||marked[p1+1][p2+1]==-1)&&(getButton(p1+1,p2).getGraphic()!=null||marked[p1+1][p2]==-1)&&(getButton(p1-1,p2).getGraphic()!=null||marked[p1-1][p2]==-1)&&(getButton(p1,p2+1).getGraphic()!=null||marked[p1][p2+1]==-1)&&(getButton(p1-1,p2-1).getGraphic()!=null||marked[p1-1][p2-1]==-1)&&(getButton(p1,p2-1).getGraphic()!=null||marked[p1][p2-1]==-1)&&(getButton(p1-1,p2+1).getGraphic()!=null||marked[p1-1][p2+1]==-1)&&(getButton(p1+1,p2-1).getGraphic()!=null||marked[p1+1][p2-1]==-1))
 				{
 			return false;
 				}
 		
+		if(p1==2&&p2==10)
+			System.out.println("heree");
 		return true;
 	}
 		 
