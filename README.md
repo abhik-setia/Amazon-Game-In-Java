@@ -7,3 +7,5 @@ RULES:
 3.Bots and arrow can't cross another bot or arrow.
 4.The bot which got trapped between arrow,bots and boundaries will be out of the game.
 5.The player whose all 4 bots trapped first will loose the game.
+
+To play the game run jar file after downloading :)
