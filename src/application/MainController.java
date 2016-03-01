@@ -13,21 +13,18 @@ import javafx.beans.binding.*;
 import javafx.beans.property.SimpleStringProperty;
 // set the class of border button
 public class MainController {
-  private 	boolean flagist=false,flago=false,gameOn=true,flag_arrow=false,move_executed=false;     //flag variables flag for button events
+  private 	boolean flagist=false,flag_arrow=false;     //flag variables flag for button events
   @FXML
-  Label La;
+  Label La,count1,count2;
   @FXML
   GridPane Gp;
-  //array for location of bot1 and bot2
-  private  static int botarray[][]=new int[12][12];  
+  private static int botarray[][]=new int[12][12],marked[][]=new int[12][12];  
+  private static int turn=0;
   
-  //to decide bots turn
-  private  static int turn=0;
+  static int bot1=4,bot2=4;    //initial number of bots
+  private static ImageView cur;//  bot of first object
   
-  static int bot1=4,bot2=4,player=1;    //initial number of bots
-  private ImageView cur;//  bot of first object
-  
-  private Button srcbot,destbot,destarrow;
+  private Button srcbot,destbot;
 	private String HOVERED_BUTTON_STYLE="-fx-background-color:silver;";
 	private String STANDARD_BUTTON_STYLE="";
 	private Button buttonsInMatrix[][]=new Button[12][12];
@@ -35,7 +32,21 @@ public class MainController {
 	public void initialState(ActionEvent ae)
 	{
 		La.setText("Welcome to amazon");
-		player=0;
+		turn=0;
+		flagist=false;
+		flag_arrow=false;
+		bot1=4;bot2=4;
+		count1.setText(" " +bot1);
+		  count2.setText(" " +bot2);
+		cur=null;
+		for(int i=0;i<12;i++)
+		{
+			for(int j=0;j<12;j++)
+			{
+				marked[i][j]=0;
+				botarray[i][j]=0;
+			}
+		}
 		
 		botarray[1][4]=2;
 		botarray[1][7]=2;
@@ -46,7 +57,6 @@ public class MainController {
 		botarray[7][10]=3;
 		botarray[10][4]=3;
 		botarray[10][7]=3;
-		
 		
 		BotsRed imgred[]=new BotsRed[4];
 		for(int i=0;i<4;i++)
@@ -111,114 +121,146 @@ public class MainController {
 		          .otherwise(
 		            new SimpleStringProperty(STANDARD_BUTTON_STYLE)
 		          )
-		    );''
+		    );
 		  }
 
-	@FXML
-	public void processcells(ActionEvent ae)
-	{
-		Button btn=(Button)ae.getSource();
-		 ImageView img=(ImageView)((Button)ae.getSource()).getGraphic();
-		 int column=GridPane.getColumnIndex(btn).intValue();
-		 int row =GridPane.getRowIndex(btn).intValue();
-		
-		 if(img !=null)
-		 {
-			 if(turn%2==0 && botarray[column][row]==2){
-			 //bot1 turn
-				 
-				 //checkfor gameover
-				 if(!flagist)
-				 {
-					 flagist=1;					 
-				 }
-			 }else if (turn%2!=0 && botarray[column][row]==3){
-			 //bot2 turn
-		 
-			 }
-			 else{
-				 calldialogbox("Error in moving bot");
-			 }
-		 }else{
-			 calldialogbox("Bot not selected error 1");
-		 }else{
-			 //may be new position select
-			 if(flagist==1)
-			 {
-				 //new position selected
-				 
-				 //swap
-				 
-			 }else{
-				 calldialogbox("Bot not selected error 2");
-			 }
-		 }
-	 
-/*           
-		if(!flagist&&img!=null)
-		{ 
-			 
-			cur=img;
-			flagist=flago=true; 
-		  srcbot=btn;      
-		  //do det up some effect for image
-		}
-		else {
-				if(flagist&&!flago)
-					{
-					 srcbot=null;
-						if(img==(cur))
-							{
-						
-							 srcbot=btn;
-						     flago=true;
-							}
-					}
-				else 
-				{
-					if(!flag_arrow)
-					{
-							if(checktarget(btn))
-							{
-								if(checkpath(srcbot,btn))
-								{
-									 int new_column=GridPane.getColumnIndex(b).intValue();
-									 int new_row =GridPane.getRowIndex(b).intValue();
-									
-									 
-									destbot=btn;
-									srcbot.setGraphic(null);
-									btn.setGraphic(cur);
-									flag_arrow=true;
-									
-								}
-						}}
-					else
-					{
-						if(checktarget(btn))  // for arrow
-						{
-						if(checkpath(destbot,btn)) //for arrow path
-						{
-							btn.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("arrow.png"))));
-							flago=false;
-							flag_arrow=false;
-							
-						}
-						
-					}
-						}
-					
-						
-				}
-	}
-*/
-		 }
-
 	
+   
+	 @FXML
+		public void processcells(ActionEvent ae)
+		{
+			Button btn=(Button)ae.getSource();
+			 ImageView img=(ImageView)((Button)ae.getSource()).getGraphic();
+			 int column=GridPane.getColumnIndex(btn).intValue();
+			 int row =GridPane.getRowIndex(btn).intValue();
+			
+			 if(img !=null)
+			 {
+					 if(turn%2==0 && botarray[row][column]==2)
+					 {
+					 //bot1 turn
+						 update();
+						if(bot1!=0) //checkfor gameover
+						{ 
+							if(!flagist)
+							 {
+								 flagist=true;
+								 flag_arrow=false;
+								 srcbot=btn;
+								 cur=img;
+								 
+							 }
+							else
+							{
+								if(flag_arrow)
+								{
+									calldialogbox("Choose Another destination to fire arrow");
+								}
+								else
+								{
+									calldialogbox("choose anotheer destination to move your bot");
+								}
+							}
+					 }
+						else
+							{La.setText("You have fucked yourself");}}
+						else if (turn%2!=0 && botarray[row][column]==3)
+					 {
+					 //bot2 turn
+							update();
+						 if(bot2!=0) //checkfor gameover
+							{ 
+								if(!flagist)
+								 {
+									 flagist=true;
+									 flag_arrow=false;
+									 srcbot=btn;
+									 cur=img;
+									 
+								 }
+								else
+									{La.setText("You have fucked yourself");}}
+						 else
+							{
+								if(flag_arrow)
+								{
+									calldialogbox("Choose Another destination to fire arrow");
+								}
+								else
+								{
+									calldialogbox("choose anotheer destination to move your bot");
+								}
+							}
+						 }
+					 else{
+						 if(!flagist)
+						 calldialogbox("Choose a proper bot");
+						 else
+						 {
+							 if(!flag_arrow)
+								 calldialogbox("choose anotheer destination to move your bot");
+						 else
+							 calldialogbox("choose a proper destination to fire arrow");
+						 }
+					     }
+			 }
+			 else
+			 {
+				 if(flagist&&!flag_arrow)
+				 {
+					 if(checkpath(srcbot,btn))               // for a valid path 
+					 {
+						 flag_arrow=true;
+						 destbot=btn;
+						 srcbot.setGraphic(null);
+						 int r=GridPane.getRowIndex(btn);
+						 int c=GridPane.getColumnIndex(btn);
+						 botarray[r][c]=0;
+						 if(turn%2==0)
+						 {
+						 botarray[row][column]=2;
+						 }
+						 else
+						 {
+						 botarray[row][column]=3;
+						 }
+						 btn.setGraphic(cur);
+						 update();
+					 }
+					 else
+					 {
+						 calldialogbox("Not a valid path");
+						 flagist=false;
+						 flag_arrow=false;
+						 srcbot=null;
+						 cur=null;
+					 }
+				 }
+				 else
+				 {
+					 if(flagist&&flag_arrow)
+					 {
+						 if(checkpath(destbot,btn))
+						 {
+							 flag_arrow=false;
+							 flagist=false;
+							 turn++;
+							 btn.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("arrow.png"))));
+							 botarray[row][column]=-1;
+							 update();
+						 }
+						 else{
+							 calldialogbox("Select a proper path to fire an arrow ");
+						 }
+					 }
+				 }
+			 }
+			 }
+   
 	 boolean checktarget(Button b)
 	 {
-		 int column=GridPane.getColumnIndex(b).intValue();
-		 int row =GridPane.getRowIndex(b).intValue();
+		 int column=GridPane.getColumnIndex(b);
+		 int row =GridPane.getRowIndex(b);
 		 if(b.getGraphic()==null&&(column>0&&column<11)&&(row>0&&row<11))
 		 {
 			 return true;
@@ -492,42 +534,42 @@ public class MainController {
 				return false;
 			}
 }
-    boolean isgameover(Button b1)
+   void  update()                      // return values 0-no game is still on 1-player1 2-player2
     {
+	   for(int i=0;i<12;i++)
+	   {
+		   for(int j=0;j<12;j++)
+		   {
+			   if(botarray[i][j]==2)
+			   {
+				   if(checkalldirection(buttonsInMatrix[i][j])&&marked[i][j]==1)  //  two ifs are used as because only two combination are used
+				   {
+					   bot1++;
+					   marked[i][j]=0;
+				   }
+				   if(!checkalldirection(buttonsInMatrix[i][j])&& marked[i][j]!=1)
+				   {
+					  bot1--;
+				   }
+			   }
+			   if(botarray[i][j]==3)
+			   {
+				   if(checkalldirection(buttonsInMatrix[i][j])&&marked[i][j]==1)  //  two ifs are used as because only two combination are used
+				   {
+					   bot2++;
+					   marked[i][j]=0;
+				   }
+				   if(!checkalldirection(buttonsInMatrix[i][j])&& marked[i][j]!=1)
+				   {
+					  bot2--;
+				   }
+			   }
+			   
+	   }
+	   }
+	   count1.setText(" " +bot1);
+	   count2.setText(" " +bot2);
     	
-    	if(player==1)
-    	{
-    		if(bot1==0)
-    			return true;
-    		else
-    		{
-    			if(!checkalldirection(b1))
-    			{
-    				bot1--;
-    				if(bot1==0)
-    					return true;
-    				else
-    				return false;
-    			}
-    		}
-    	}
-    	else
-    	{
-    		if(bot2==0)
-    			return true;
-    		else
-    		{
-    			if(!checkalldirection(b1))
-    			{
-    				bot2--;
-    				if(bot2==0)
-    					return true;
-    				else
-    				return false;
-    			}
-    		}
-    	}
-    	return true;
     }
 	boolean checkalldirection(Button b1)	
 	{
