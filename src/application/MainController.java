@@ -1,21 +1,32 @@
 package application;
 
+import java.util.Optional;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.beans.binding.*;
 import javafx.beans.property.SimpleStringProperty;
 // set the class of border button
 public class MainController {
   private 	boolean flagist=false,flag_arrow=false;     //flag variables flag for button events
   @FXML
-  Label La,count1,count2;
+  Label La,count1,count2,label_winner;
   @FXML
   GridPane Gp;
   private static int botarray[][]=new int[12][12],marked[][]=new int[12][12];  
@@ -171,8 +182,9 @@ public class MainController {
 					 }
 					else
 						{
-						La.setText("Player 1 has lost");}
+						calldialogboxforwinner("Player 2 has won");
 						}
+				}
 						else if (turn%2!=0 && botarray[row][column]==3)
 					 {
 					 //bot2 turn
@@ -201,7 +213,7 @@ public class MainController {
 							}
 						 }
 						 else
-							{La.setText("Player 2 has lost");}}
+							{calldialogboxforwinner("Player 1 has won");}}
 					 else{
 						 if(!flagist)
 						 calldialogbox("Choose a proper bot");
@@ -236,6 +248,10 @@ public class MainController {
 						 }
 						 btn.setGraphic(cur);
 						 update();
+						 if(bot1==0)
+							 calldialogboxforwinner("Player2 has won");
+						 else  if(bot2==0)
+							 calldialogboxforwinner("Player1 has won");
 					 }
 					 else
 					 {
@@ -255,10 +271,17 @@ public class MainController {
 							 flag_arrow=false;
 							 flagist=false;
 							 turn++;
-							 btn.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("arrow.png"))));
+							 ImageView im=new ImageView(new Image(getClass().getResourceAsStream("arrow.png")));
+							 im.setFitWidth(50.0);
+								im.setFitHeight(50.0);
+							 btn.setGraphic(im);
 							 botarray[row][column]=-1;
 							 marked[row][column]=-1;              // this has been updated
 							 update();
+							 if(bot1==0)
+								 calldialogboxforwinner("Player2 has won");
+							 else  if(bot2==0)
+								 calldialogboxforwinner("Player1 has won");
 						 }
 						 else{
 							 calldialogbox("Select a proper path to fire an arrow ");
@@ -592,14 +615,47 @@ public class MainController {
 				{
 			return false;
 				}
-		
-		if(p1==2&&p2==10)
-			System.out.println("heree");
 		return true;
 	}
 		 
-		 
-		 
+		 void calldialogboxforwinner(String msg)
+		 {
+			
+			 try{
+			 Alert alert=new Alert(AlertType.CONFIRMATION);
+			 alert.setTitle("Congratulations we have the winner");
+			 alert.setGraphic(new ImageView(this.getClass().getResource("Trophy.png").toString()));
+			 alert.setHeaderText("KUDOS THE WINNER");
+			 alert.setContentText(msg);
+			 ButtonType exit=new ButtonType("EXIT");
+		    
+		     alert.initStyle(StageStyle.UNDECORATED);
+			 ButtonType reset=new ButtonType("RESET");
+			 alert.getButtonTypes().setAll(exit,reset);
+			 Optional<ButtonType>  result=alert.showAndWait();
+			
+			 if(result.get()==exit)
+			 {
+				 exit_from_windows(alert);
+			 }
+			 else {
+				 {
+					initialState(new ActionEvent());
+				 }
+			}
+			 }
+			 catch(Exception E)
+			 {
+				 System.out.println("An exception has occured  "+E.getCause());
+				 E.printStackTrace();
+			 }
+		 }
+		 void exit_from_windows(Alert type1)
+		 {
+			type1.close();
+			 Stage mainStage=(Stage)Gp.getScene().getWindow();
+			 mainStage.close();
+		 }
 		 
 		 
 		 
