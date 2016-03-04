@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.image.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="748.0" prefWidth="762.0" styleClass="ro" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="820.0" prefWidth="1360.0" styleClass="ro" stylesheets="@application.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
    <children>
-      <GridPane fx:id="Gp" alignment="CENTER" centerShape="false" focusTraversable="true" layoutX="6.0" layoutY="45.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="600.0" prefWidth="750.0" scaleShape="false" styleClass="bo" stylesheets="@application.css">
+      <GridPane fx:id="Gp" alignment="CENTER" centerShape="false" focusTraversable="true" layoutX="291.0" layoutY="42.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="600.0" prefWidth="750.0" scaleShape="false" styleClass="bo" stylesheets="@application.css">
          <children>
             <Button mnemonicParsing="false" onAction="#processcells" onMouseMoved="#processcellsm" prefHeight="50.0" prefWidth="77.0" styleClass="bla" stylesheets="@application.css" text="" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
             <Button mnemonicParsing="false" onAction="#processcells" onMouseMoved="#processcellsm" prefHeight="56.0" prefWidth="73.0" styleClass="wh" stylesheets="@application.css" text="" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
@@ -26,7 +26,6 @@
             <Button mnemonicParsing="false" onAction="#processcells" onMouseMoved="#processcellsm" prefHeight="56.0" prefWidth="73.0" styleClass="bla" stylesheets="@application.css" text="" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="9" GridPane.valignment="CENTER" />
             <Button mnemonicParsing="false" onAction="#processcells" onMouseMoved="#processcellsm" prefHeight="56.0" prefWidth="73.0" styleClass="wh" stylesheets="@application.css" text="" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="10" GridPane.valignment="CENTER" />
             <Button mnemonicParsing="false" onAction="#processcells" onMouseMoved="#processcellsm" prefHeight="56.0" prefWidth="73.0" styleClass="wh" stylesheets="@application.css" text="" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-            <Button mnemonicParsing="false" onAction="#processcells" onKeyPressed="#processcells" onMouseClicked="#processcells" onMouseDragOver="#processcells" onMouseMoved="#processcellsm" prefHeight="56.0" prefWidth="73.0" styleClass="bla" stylesheets="@application.css" text="" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
             <Button mnemonicParsing="false" onAction="#processcells" onMouseMoved="#processcellsm" prefHeight="56.0" prefWidth="73.0" styleClass="wh" stylesheets="@application.css" text="" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
             <Button mnemonicParsing="false" onAction="#processcells" onMouseMoved="#processcellsm" prefHeight="56.0" prefWidth="73.0" styleClass="bla" stylesheets="@application.css" text="" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
             <Button mnemonicParsing="false" onAction="#processcells" onMouseMoved="#processcellsm" prefHeight="56.0" prefWidth="73.0" styleClass="wh" stylesheets="@application.css" text="" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
@@ -160,6 +159,7 @@
             <Button alignment="CENTER" mnemonicParsing="false" prefHeight="56.0" prefWidth="61.0" styleClass="Cl1" stylesheets="@application.css" GridPane.columnIndex="0" GridPane.rowIndex="9" />
             <Button alignment="CENTER" mnemonicParsing="false" prefHeight="56.0" prefWidth="61.0" styleClass="Cl1" stylesheets="@application.css" GridPane.columnIndex="0" GridPane.rowIndex="8" />
             <Button alignment="CENTER" mnemonicParsing="false" prefHeight="50.0" prefWidth="66.0" styleClass="Cl1" stylesheets="@application.css" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+            <Button mnemonicParsing="false" onAction="#processcells" onMouseMoved="#processcellsm" prefHeight="56.0" prefWidth="73.0" styleClass="bla" stylesheets="@application.css" text="" GridPane.columnIndex="2" GridPane.rowIndex="2" />
          </children>
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -191,10 +191,14 @@
          </rowConstraints>
          
       </GridPane>
-      <Button layoutX="154.0" layoutY="656.0" mnemonicParsing="false" onAction="#initialState" prefHeight="25.0" prefWidth="155.0" text="Reset" />
-      <Button layoutX="458.0" layoutY="656.0" mnemonicParsing="false" onAction="#initialState" prefHeight="25.0" prefWidth="167.0" text="Set" />
-      <Label fx:id="La" layoutX="246.0" layoutY="690.0" prefHeight="17.0" prefWidth="289.0" styleClass="labe" stylesheets="@application.css" />
-      <Label fx:id="count1" alignment="CENTER" layoutX="70.0" layoutY="20.0" prefHeight="17.0" prefWidth="105.0" styleClass="labe" stylesheets="@application.css" />
-      <Label fx:id="count2" alignment="CENTER" layoutX="473.0" layoutY="20.0" prefHeight="17.0" prefWidth="105.0" styleClass="labe" stylesheets="@application.css" />
+      <Button layoutX="1157.0" layoutY="52.0" mnemonicParsing="false" onAction="#initialState" prefHeight="25.0" prefWidth="173.0" text="Reset" />
+      <Button layoutX="1160.0" layoutY="16.0" mnemonicParsing="false" onAction="#initialState" prefHeight="25.0" prefWidth="167.0" text="Set" />
+      <Label fx:id="La" layoutX="1057.0" layoutY="369.0" prefHeight="17.0" prefWidth="289.0" styleClass="labe" stylesheets="@application.css" />
+      <Label fx:id="count1" alignment="CENTER" layoutX="157.0" layoutY="135.0" prefHeight="17.0" prefWidth="105.0" styleClass="labe" stylesheets="@application.css" />
+      <Label layoutX="635.0" layoutY="16.0" prefHeight="25.0" prefWidth="196.0" text="              PLAYER   1 " />
+      <Label layoutX="40.0" layoutY="135.0" prefHeight="17.0" prefWidth="105.0" text="BOTS REMAINING" />
+      <Label layoutX="680.0" layoutY="653.0" prefHeight="25.0" prefWidth="196.0" text="    PLAYER  2" />
+      <Label fx:id="count2" alignment="CENTER" layoutX="165.0" layoutY="547.0" prefHeight="17.0" prefWidth="105.0" styleClass="labe" stylesheets="@application.css" />
+      <Label layoutX="54.0" layoutY="547.0" text="BOTS REMAINING" />
    </children>
 </Pane>

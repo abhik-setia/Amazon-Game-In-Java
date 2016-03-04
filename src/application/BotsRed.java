@@ -7,7 +7,7 @@ public class BotsRed {
 	ImageView i;
 BotsRed()
 {
-	Image imgr=new Image(getClass().getResourceAsStream("bot2.png"));
+	Image imgr=new Image(getClass().getResourceAsStream("bot.png"));
 	i=new ImageView(imgr);
 }
 }
